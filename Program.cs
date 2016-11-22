@@ -30,53 +30,15 @@ namespace ConsoleApplication
 
             while (library.InLib)
             {
-                int count = 0;
-                foreach (Book element in books)
-                {
-                    count += 1;
-                    Console.WriteLine($"{count}. {element.Title}");
-                }
-                Console.WriteLine($"{count + 1}. Return Book");
-                Console.WriteLine("Select the Book you would like to checkout by number:");
+                
+                library.PrintMenu();
                 var request = GetUserInput(library);
-
-
-                int a = 0;
-                while (!int.TryParse(request, out a))
-                {
-                    Console.WriteLine($"Sorry, please provide a number for your request");
-                    request = GetUserInput(library);
-                }
-                if (Int32.Parse(request) > count+1)
-                    {
-                    Console.WriteLine($"Sorry, I don't understand, please provide a number in the list");
-                    request = GetUserInput(library);
-                    }
-                else if (Int32.Parse(request) == count + 1)
-                    {
-                        if (library.GetCheckedout().Count > 0)
-                            {   
-                                Console.WriteLine($"Returning.....");
-                                library.ReturnBook();
-                                Console.WriteLine($"Book Returned!");
-                            }
-                        else
-                            {
-                                Console.WriteLine($"Sorry, there are no books checked out. What would you like to do?");
-                                request = GetUserInput(library);
-                            }
-                    }
-                else
-                    {
-                        if (library.GetCheckedout().Count > 0){
-                            Console.WriteLine($"Sorry, you must return your current book first.");
-                            request = GetUserInput(library);
-                        }else{
-                            library.Checkout(Int32.Parse(request));
-                            Console.WriteLine($"I hope you enjoy your Book!");
-                        }
-                    }
+                Console.Clear();
+                library.RequestValidate(request);
             }
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("Goodbye!");
         }
     }
 }
